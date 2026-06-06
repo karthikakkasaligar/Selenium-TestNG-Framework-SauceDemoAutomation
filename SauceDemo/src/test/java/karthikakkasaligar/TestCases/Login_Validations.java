@@ -63,5 +63,12 @@ public class Login_Validations extends BaseTest {
 	{
 		login.verifyerrormessageclosbutton();
 	}
+	
+	@Test
+	public void  Verifyblankusernameandpassword()
+	{
+		login.VerifyblankusernameandpassworD();
+		Assert.assertEquals(login.getErrorMessage(), "Epic sadface: Username is required");
+	}
 
 }

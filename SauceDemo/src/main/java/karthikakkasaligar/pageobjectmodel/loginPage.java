@@ -6,7 +6,6 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import org.testng.Assert;
 
 import karthikakkasaligar.ReUseableComponents.ReUseableComponents;
 
@@ -39,11 +38,11 @@ public class loginPage extends ReUseableComponents {
 	WebElement errorMessageTxt;
 
 	By waitforerrormsg = By.cssSelector(".error-message-container.error");
-	
-	@FindBy(css=".error-button")
+
+	@FindBy(css = ".error-button")
 	WebElement errorclosecta;
-	
-	By errorclosebutton=By.cssSelector(".error-button");
+
+	By errorclosebutton = By.cssSelector(".error-button");
 
 	public void goToURL() {
 		driver.get("https://www.saucedemo.com/");
@@ -58,9 +57,8 @@ public class loginPage extends ReUseableComponents {
 		return passwords.getText().split("\n")[1];
 
 	}
-	
-	public String getlockeduser()
-	{
+
+	public String getlockeduser() {
 		return usernames.getText().split("\n")[2];
 	}
 
@@ -77,11 +75,9 @@ public class loginPage extends ReUseableComponents {
 	public String getErrorMessage() {
 		return errorMessageTxt.getText();
 	}
-	
 
 	@SuppressWarnings("deprecation")
-	public  String getpasswordattribute()
-	{
+	public String getpasswordattribute() {
 		return passwordTxt.getAttribute("type");
 	}
 
@@ -106,44 +102,44 @@ public class loginPage extends ReUseableComponents {
 		submitCTA.click();
 		waitforvisibilityofwebelement(waitforerrormsg);
 	}
-	
-	public void EmptyUserName(String Password)
-	{
+
+	public void EmptyUserName(String Password) {
 		passwordTxt.sendKeys(Password);
 		submitCTA.click();
 		waitforvisibilityofwebelement(waitforerrormsg);
 	}
-	
-	public void EmptyPassword(String username) 
-	{
+
+	public void EmptyPassword(String username) {
 		usernameTxt.sendKeys(username);
 		submitCTA.click();
 		waitforvisibilityofwebelement(waitforerrormsg);
 	}
-	
-	public void lockeduserlogin(String username,String Password)
-	{
+
+	public void lockeduserlogin(String username, String Password) {
 		usernameTxt.sendKeys(username);
 		passwordTxt.sendKeys(Password);
 		submitCTA.click();
 		waitforvisibilityofwebelement(waitforerrormsg);
 	}
-	
+
 	public inventoryPage LoginUsingEnterkey(String username, String Password) {
-		
+
 		usernameTxt.sendKeys(username);
 		passwordTxt.sendKeys(Password);
 		submitCTA.sendKeys(Keys.ENTER);
 		inventoryPage inventory = new inventoryPage(driver);
 		return inventory;
 	}
-	
-	public void verifyerrormessageclosbutton()
-	{
+
+	public void verifyerrormessageclosbutton() {
 		submitCTA.click();
 		waitforelementtobeclickable(errorclosebutton);
 		errorclosecta.click();
-		
+	}
+	
+	public void VerifyblankusernameandpassworD()
+	{
+		submitCTA.click();
 	}
 
 }
