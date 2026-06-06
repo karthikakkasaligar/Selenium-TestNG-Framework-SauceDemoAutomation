@@ -9,11 +9,11 @@ import org.openqa.selenium.support.PageFactory;
 
 import karthikakkasaligar.ReUseableComponents.ReUseableComponents;
 
-public class loginPage extends ReUseableComponents {
+public class LoginPage extends ReUseableComponents {
 
 	WebDriver driver;
 
-	public loginPage(WebDriver driver) {
+	public LoginPage(WebDriver driver) {
 		super(driver);
 		this.driver = driver;
 		PageFactory.initElements(driver, this);
@@ -81,11 +81,11 @@ public class loginPage extends ReUseableComponents {
 		return passwordTxt.getAttribute("type");
 	}
 
-	public inventoryPage login(String username, String Password) {
+	public InventoryPage login(String username, String Password) {
 		usernameTxt.sendKeys(username);
 		passwordTxt.sendKeys(Password);
 		submitCTA.click();
-		inventoryPage inventory = new inventoryPage(driver);
+		InventoryPage inventory = new InventoryPage(driver);
 		return inventory;
 	}
 
@@ -122,12 +122,12 @@ public class loginPage extends ReUseableComponents {
 		waitforvisibilityofwebelement(waitforerrormsg);
 	}
 
-	public inventoryPage LoginUsingEnterkey(String username, String Password) {
+	public InventoryPage LoginUsingEnterkey(String username, String Password) {
 
 		usernameTxt.sendKeys(username);
 		passwordTxt.sendKeys(Password);
 		submitCTA.sendKeys(Keys.ENTER);
-		inventoryPage inventory = new inventoryPage(driver);
+		InventoryPage inventory = new InventoryPage(driver);
 		return inventory;
 	}
 

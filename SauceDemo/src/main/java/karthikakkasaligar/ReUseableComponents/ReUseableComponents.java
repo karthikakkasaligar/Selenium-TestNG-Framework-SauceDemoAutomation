@@ -22,6 +22,9 @@ public class ReUseableComponents {
 
 	@FindBy(id = "shopping_cart_container")
 	WebElement carticon;
+	
+	
+	
 
 	public void waitforvisibilityofwebelement(By visibilityofelement) {
 		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
@@ -42,5 +45,7 @@ public class ReUseableComponents {
 	public void addtocarticon() {
 		carticon.click();
 	}
+	
+	
 
 }

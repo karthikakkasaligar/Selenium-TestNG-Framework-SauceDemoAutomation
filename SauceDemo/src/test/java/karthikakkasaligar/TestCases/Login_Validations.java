@@ -6,7 +6,7 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import karthikakkasaligar.TestComponents.BaseTest;
-import karthikakkasaligar.pageobjectmodel.inventoryPage;
+import karthikakkasaligar.pageobjectmodel.InventoryPage;
 
 public class Login_Validations extends BaseTest {
 
@@ -36,7 +36,7 @@ public class Login_Validations extends BaseTest {
 
 	@Test
 	public void verifyLoginUsingEnterkey() {
-		inventoryPage inventory = login.LoginUsingEnterkey(login.getusername(), login.getpassword());
+		InventoryPage inventory = login.LoginUsingEnterkey(login.getusername(), login.getpassword());
 		inventory.verifyProductPageLoad();
 	}
 

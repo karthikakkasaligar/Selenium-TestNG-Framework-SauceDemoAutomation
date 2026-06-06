@@ -13,11 +13,11 @@ import org.testng.Assert;
 
 import karthikakkasaligar.ReUseableComponents.ReUseableComponents;
 
-public class inventoryPage extends ReUseableComponents {
+public class InventoryPage extends ReUseableComponents {
 
 	WebDriver driver;
 
-	public inventoryPage(WebDriver driver) {
+	public InventoryPage(WebDriver driver) {
 		super(driver);
 		this.driver = driver;
 		PageFactory.initElements(driver, this);
@@ -32,7 +32,9 @@ public class inventoryPage extends ReUseableComponents {
 	WebElement inventoryname;
 
 	By productname = By.cssSelector(".inventory_item_name");
-
+	
+	By Description = By.cssSelector(".inventory_item_desc");
+	
 	By addtocartcta = By.tagName("button");
 
 	@FindBy(css = ".inventory_item_name")
@@ -54,24 +56,34 @@ public class inventoryPage extends ReUseableComponents {
 
 	@FindBy(css = ".btn_inventory")
 	List<WebElement> addtocart;
-	
+
 	@FindBy(css = ".btn_inventory")
 	WebElement addtocartButton;
-	
-	By addtocartbutton=By.cssSelector(".btn_inventory");
+
+	By addtocartbutton = By.cssSelector(".btn_inventory");
 
 	@FindBy(className = "shopping_cart_badge")
 	WebElement cartnumber;
 
 	@FindBy(id = "shopping_cart_container")
 	WebElement carticon;
-	
-	@FindBy(css=".shopping_cart_badge")
+
+	@FindBy(css = ".shopping_cart_badge")
 	WebElement CartBadge;
+
+	@FindBy(css = ".shopping_cart_badge")
+	List<WebElement> cartbadges;
+
+	By removecta = By.xpath("//button[text()='Remove']");
+
 	
-	By removecta=By.xpath("//button[text()='Remove']");
-
-
+	public ProductDetailsPage clickonproduct()
+	{
+		inventoryname.click();
+		ProductDetailsPage ProductDetails = new ProductDetailsPage(driver);
+		return ProductDetails;
+	}
+	
 	public void verifyProductDisplay() {
 		waituntilvisibilityOfAllElementsLocatedBy(allproducts);
 		Assert.assertFalse(products.isEmpty(), "No Products Found");
@@ -143,7 +155,7 @@ public class inventoryPage extends ReUseableComponents {
 
 		}
 		addtocarticon();
-		CartPage cart=new CartPage(driver);
+		CartPage cart = new CartPage(driver);
 		return cart;
 
 	}
@@ -156,17 +168,14 @@ public class inventoryPage extends ReUseableComponents {
 			Assert.assertTrue(items.contains(itemname), itemname + " is not present in the list");
 		}
 	}
-	
-	public int addallproductstocart(String[] productslist )
-	{
-		int itemsaddedtocart=0;
-		List<String> itemlist=new ArrayList<String>(Arrays.asList(productslist));
+
+	public int addallproductstocart(String[] productslist) {
+		int itemsaddedtocart = 0;
+		List<String> itemlist = new ArrayList<String>(Arrays.asList(productslist));
 		Assert.assertFalse(products.isEmpty(), "No Products Found");
-		for(WebElement product : products)
-		{
-			String Actualnames=product.findElement(productname).getText().trim();
-			if(itemlist.contains(Actualnames))
-			{
+		for (WebElement product : products) {
+			String Actualnames = product.findElement(productname).getText().trim();
+			if (itemlist.contains(Actualnames)) {
 				product.findElement(addtocartbutton).click();
 				itemsaddedtocart++;
 			}
@@ -175,20 +184,18 @@ public class inventoryPage extends ReUseableComponents {
 		addtocarticon();
 		return itemsaddedtocart;
 	}
-	
-	public void removalofproductfromcart()
-	{
+
+	public void removalofproductfromcart() {
 		addtocartButton.click();
-		int cartcount=Integer.parseInt(CartBadge.getText().trim());
+		int cartcount = Integer.parseInt(CartBadge.getText().trim());
 		Assert.assertEquals(cartcount, 1);
 		waitforelementtobeclickable(addtocartbutton);
 		Assert.assertEquals(addtocartButton.getText().trim(), "Remove");
 		addtocartButton.click();
 		Assert.assertEquals(addtocartButton.getText().trim(), "Add to cart");
 	}
-	
-	public CartPage Addsingleproductandremovefromcart(String producttobeadded)
-	{
+
+	public CartPage Addsingleproductandremovefromcart(String producttobeadded) {
 		for (WebElement product : products) {
 			String ActualProductname = product.findElement(productname).getText().trim();
 			if (producttobeadded.equalsIgnoreCase(ActualProductname)) {
@@ -200,7 +207,33 @@ public class inventoryPage extends ReUseableComponents {
 		CartPage cart = new CartPage(driver);
 		return cart;
 	}
+
+	public void verifyCartBadgeDisappearsWhenEmpty() {
+		addtocartButton.click();
+		Assert.assertTrue(cartbadges.size() > 0, "Shopping Badge not Displayed after adding product to cart");
+		addtocartButton.click();
+		Assert.assertTrue(cartbadges.isEmpty(), "Shopping Badge Displayed after removing product from cart");
+	}
 	
-	
+	public String[] ProductDetails() {
+
+		String name = "";
+		String description = "";
+		String price = "";
+
+		for (WebElement item : products) {
+
+			name = item.findElement(productname).getText().trim();
+			description = item.findElement(Description).getText().trim();
+			price = item.findElement(allprices).getText().trim();
+
+			if (name.equalsIgnoreCase("Sauce Labs Bolt T-Shirt")) {
+				item.findElement(productname).click();
+				break;
+			}
+		}
+
+		return new String[] { name, description, price };
+	}
 
 }

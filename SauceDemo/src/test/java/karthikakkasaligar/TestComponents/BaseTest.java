@@ -15,12 +15,12 @@ import org.openqa.selenium.firefox.FirefoxOptions;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 
-import karthikakkasaligar.pageobjectmodel.loginPage;
+import karthikakkasaligar.pageobjectmodel.LoginPage;
 
 public class BaseTest {
 	
 	public WebDriver driver;
-	public loginPage login;
+	public LoginPage login;
 
 	public WebDriver intilizedriver() throws IOException {
 
@@ -55,18 +55,18 @@ public class BaseTest {
 	
 	
 	@BeforeMethod
-	public loginPage lunchapplication() throws IOException
+	public LoginPage lunchapplication() throws IOException
 	{
 		 driver= intilizedriver();
-		 login = new loginPage(driver);
+		 login = new LoginPage(driver);
 		 login.goToURL();
 		 return login;	 
 	}
 	
-	@AfterMethod
-	public void teardown() {
-		driver.quit();
-	}
+//	@AfterMethod
+//	public void teardown() {
+//		driver.quit();
+//	}
 	
 	
 
