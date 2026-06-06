@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="Failed suite [Suite]" guice-stage="DEVELOPMENT">
+  <test thread-count="5" name="Inventory Page Validations(failed)">
+    <classes>
+      <class name="karthikakkasaligar.TestCases.Product_Validations">
+        <methods>
+          <include name="lunchapplication"/>
+          <include name="teardown"/>
+          <include name="VerifyProductDetails"/>
+        </methods>
+      </class> <!-- karthikakkasaligar.TestCases.Product_Validations -->
+    </classes>
+  </test> <!-- Inventory Page Validations(failed) -->
+</suite> <!-- Failed suite [Suite] -->
