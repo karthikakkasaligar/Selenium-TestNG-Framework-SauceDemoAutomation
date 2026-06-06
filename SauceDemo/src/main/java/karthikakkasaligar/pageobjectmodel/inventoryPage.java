@@ -187,6 +187,20 @@ public class inventoryPage extends ReUseableComponents {
 		Assert.assertEquals(addtocartButton.getText().trim(), "Add to cart");
 	}
 	
+	public CartPage Addsingleproductandremovefromcart(String producttobeadded)
+	{
+		for (WebElement product : products) {
+			String ActualProductname = product.findElement(productname).getText().trim();
+			if (producttobeadded.equalsIgnoreCase(ActualProductname)) {
+				product.findElement(addtocartcta).click();
+				break;
+			}
+		}
+		addtocarticon();
+		CartPage cart = new CartPage(driver);
+		return cart;
+	}
+	
 	
 
 }

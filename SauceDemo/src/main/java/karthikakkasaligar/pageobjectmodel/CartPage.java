@@ -14,45 +14,56 @@ import org.testng.Assert;
 import karthikakkasaligar.ReUseableComponents.ReUseableComponents;
 
 public class CartPage extends ReUseableComponents {
-	
+
 	WebDriver driver;
 
 	public CartPage(WebDriver driver) {
 		super(driver);
-		this.driver=driver;
+		this.driver = driver;
 		PageFactory.initElements(driver, this);
 	}
-	
-	
-	@FindBy	(css=".cart_list")
-	List<WebElement>  cartitems;
-	
+
+	@FindBy(css = ".cart_list")
+	List<WebElement> cartitems;
+
 	@FindBy(css = ".inventory_item_name")
 	List<WebElement> productnames;
-	
+
+	@FindBy(css = ".cart_item")
+	List<WebElement> itemincart;
+
 	By productname = By.cssSelector(".inventory_item_name");
-	
-	public void verifycartitems(String[] productslist) 
-	{
+
+	By addtocartcta = By.tagName("button");
+
+	public void verifycartitems(String[] productslist) {
 		List<String> items = new ArrayList<String>(Arrays.asList(productslist));
 		for (WebElement cartitem : productnames) {
 			String itemname = cartitem.getText().trim();
 			Assert.assertTrue(items.contains(itemname), itemname + " is not present in the list");
 		}
 	}
-	
-	public void verifycartitems(String [] productslist , int productsaddtocart )
-	{
+
+	public void verifycartitems(String[] productslist, int productsaddtocart) {
 		Assert.assertTrue(driver.getCurrentUrl().contains("cart.html"), " its not cart page");
 		Assert.assertFalse(cartitems.isEmpty(), "No Items Found in Cart");
 		Assert.assertEquals(productslist.length, productsaddtocart);
-		//Assert.assertTrue(productslist.length, null);
-		List<String> cartitemslist=new ArrayList<String>(Arrays.asList(productslist));
-		for(WebElement cartitem : cartitems)
-		{
-			String actualcartitem=cartitem.findElement(productname).getText().trim();
-		    Assert.assertTrue(cartitemslist.contains(actualcartitem), cartitemslist + " is not Present in List");
+		List<String> cartitemslist = new ArrayList<String>(Arrays.asList(productslist));
+		for (WebElement cartitem : cartitems) {
+			String actualcartitem = cartitem.findElement(productname).getText().trim();
+			Assert.assertTrue(cartitemslist.contains(actualcartitem), cartitemslist + " is not Present in List");
 		}
+	}
+
+	public void Removeproductfromcart(String producttobeadded) {
+		Assert.assertEquals(itemincart.size(), 1);
+		for (WebElement cartitem : itemincart) {
+			String cartitemname = cartitem.findElement(productname).getText().trim();
+			if (producttobeadded.equalsIgnoreCase(cartitemname)) {
+				cartitem.findElement(addtocartcta).click();
+			}
+		}
+		Assert.assertEquals(itemincart.size(), 0, "Cart is not empty after removing the product");
 	}
 
 }

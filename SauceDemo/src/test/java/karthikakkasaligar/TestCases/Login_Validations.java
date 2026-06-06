@@ -45,28 +45,28 @@ public class Login_Validations extends BaseTest {
 		String Attribute = login.getpasswordattribute();
 		Assert.assertEquals(Attribute, "password", "Password is not masked");
 	}
-	
+
 	@Test
 	public void wrongPasswordValidation() throws IOException {
 		login.wrongPasswordLogin(login.getusername(), login.getwrongpassword());
-		Assert.assertEquals(login.getErrorMessage(),"Epic sadface: Username and password do not match any user in this service");		
+		Assert.assertEquals(login.getErrorMessage(),
+				"Epic sadface: Username and password do not match any user in this service");
 	}
-	
+
 	@Test
 	public void WrongUsernamevalidation() throws IOException {
 		login.wrongUsernameLogin(login.getwrongusername(), login.getpassword());
-		Assert.assertEquals(login.getErrorMessage(),"Epic sadface: Username and password do not match any user in this service");	
+		Assert.assertEquals(login.getErrorMessage(),
+				"Epic sadface: Username and password do not match any user in this service");
 	}
-	
+
 	@Test
-	public void Errormessageclosebutton()
-	{
+	public void Errormessageclosebutton() {
 		login.verifyerrormessageclosbutton();
 	}
-	
+
 	@Test
-	public void  Verifyblankusernameandpassword()
-	{
+	public void Verifyblankusernameandpassword() {
 		login.VerifyblankusernameandpassworD();
 		Assert.assertEquals(login.getErrorMessage(), "Epic sadface: Username is required");
 	}
