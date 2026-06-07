@@ -15,20 +15,15 @@ public class ReUseableComponents {
 	WebDriver driver;
 
 	public ReUseableComponents(WebDriver driver) {
-
 		this.driver = driver;
 		PageFactory.initElements(driver, this);
 	}
 
 	@FindBy(id = "shopping_cart_container")
 	WebElement carticon;
-	
-	
-	
 
 	public void waitforvisibilityofwebelement(By visibilityofelement) {
 		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-
 		wait.until(ExpectedConditions.visibilityOfElementLocated(visibilityofelement));
 	}
 
@@ -45,7 +40,5 @@ public class ReUseableComponents {
 	public void addtocarticon() {
 		carticon.click();
 	}
-	
-	
 
 }

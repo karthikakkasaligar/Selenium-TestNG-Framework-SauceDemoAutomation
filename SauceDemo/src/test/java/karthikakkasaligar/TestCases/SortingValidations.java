@@ -12,31 +12,24 @@ public class SortingValidations extends BaseTest {
 		InventoryPage inventory = login.login(login.getusername(), login.getpassword());
 		inventory.verifyAtoZsorting();
 	}
-	
+
 	@Test
 	public void sortProductsNameZtoA() {
 		InventoryPage inventory = login.login(login.getusername(), login.getpassword());
 		inventory.verifyZtoAsorting();
 	}
-	
+
 	@Test
 	public void sortProductsPriceHightoLow() {
 		InventoryPage inventory = login.login(login.getusername(), login.getpassword());
 		inventory.verifypricehightolow();
-		
+
 	}
-	
+
 	@Test
 	public void sortProductsPriceLowToHigh() {
 		InventoryPage inventory = login.login(login.getusername(), login.getpassword());
 		inventory.verifypricelowtohigh();
 	}
-
-
-	
-
-	
-
-	
 
 }

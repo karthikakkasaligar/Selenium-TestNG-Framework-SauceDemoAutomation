@@ -37,12 +37,13 @@ public class LoginPage extends ReUseableComponents {
 	@FindBy(css = ".error-message-container.error")
 	WebElement errorMessageTxt;
 
-	By waitforerrormsg = By.cssSelector(".error-message-container.error");
-
 	@FindBy(css = ".error-button")
 	WebElement errorclosecta;
 
 	By errorclosebutton = By.cssSelector(".error-button");
+	
+	By waitforerrormsg = By.cssSelector(".error-message-container.error");
+
 
 	public void goToURL() {
 		driver.get("https://www.saucedemo.com/");
@@ -136,9 +137,8 @@ public class LoginPage extends ReUseableComponents {
 		waitforelementtobeclickable(errorclosebutton);
 		errorclosecta.click();
 	}
-	
-	public void VerifyblankusernameandpassworD()
-	{
+
+	public void VerifyblankusernameandpassworD() {
 		submitCTA.click();
 	}
 

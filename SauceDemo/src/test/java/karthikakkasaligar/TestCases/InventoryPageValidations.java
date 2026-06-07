@@ -18,7 +18,7 @@ public class InventoryPageValidations extends BaseTest {
 	@Test
 	public void VerifyProductPricescorrectly() {
 		String expectedprices[] = { "$29.99", "$9.99", "$15.99", "$49.99", "$7.99", "$15.99" };
-		InventoryPage inventory =	login.login(login.getusername(), login.getpassword());
+		InventoryPage inventory = login.login(login.getusername(), login.getpassword());
 		inventory.verifyproductprices(expectedprices);
 	}
 
