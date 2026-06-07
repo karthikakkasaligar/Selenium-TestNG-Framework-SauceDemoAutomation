@@ -63,10 +63,10 @@ public class BaseTest {
 		 return login;	 
 	}
 	
-//	@AfterMethod
-//	public void teardown() {
-//		driver.quit();
-//	}
+	@AfterMethod
+	public void teardown() {
+		driver.quit();
+	}
 	
 	
 

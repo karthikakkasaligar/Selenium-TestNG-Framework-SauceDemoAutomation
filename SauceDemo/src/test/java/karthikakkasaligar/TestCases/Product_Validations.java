@@ -10,6 +10,18 @@ import karthikakkasaligar.pageobjectmodel.ProductDetailsPage;
 public class Product_Validations extends BaseTest {
 
 	@Test
+	public void sortProductsNameAtoZ() {
+		InventoryPage inventory = login.login(login.getusername(), login.getpassword());
+		inventory.verifyAtoZsorting();
+	}
+	
+	@Test
+	public void sortProductsNameZtoA() {
+		InventoryPage inventory = login.login(login.getusername(), login.getpassword());
+		inventory.verifyZtoAsorting();
+	}
+
+	@Test
 	public void verifyProductDetailsPageOpens() {
 		InventoryPage inventory = login.login(login.getusername(), login.getpassword());
 		ProductDetailsPage ProductDetails = inventory.clickonproduct();

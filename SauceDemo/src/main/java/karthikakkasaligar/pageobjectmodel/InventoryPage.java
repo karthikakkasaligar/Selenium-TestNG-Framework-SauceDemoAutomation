@@ -9,6 +9,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 
 import karthikakkasaligar.ReUseableComponents.ReUseableComponents;
@@ -73,9 +74,29 @@ public class InventoryPage extends ReUseableComponents {
 
 	@FindBy(css = ".shopping_cart_badge")
 	List<WebElement> cartbadges;
+	
+	@FindBy(css=".product_sort_container")
+	WebElement filter;
 
 	By removecta = By.xpath("//button[text()='Remove']");
 
+	
+	public void verifyZtoAsorting() {
+		filter.click();
+		Select s=new Select(filter);
+		s.selectByIndex(1);
+		for(int i=0; i<products.size()-1;i++){
+			String cuurentproduct=products.get(i).getText().trim();
+			String nextproduct=products.get(i+1).getText().trim();
+			Assert.assertTrue(cuurentproduct.compareToIgnoreCase(nextproduct)>=0, "Products are not Sorted in Z->A Order");
+		}}
+	
+	public void verifyAtoZsorting(){
+		for(int i=0; i<products.size()-1;i++){
+			String currentproduct=products.get(i).getText().trim();
+			String nextproduct=products.get(i+1).getText().trim();
+			Assert.assertTrue(currentproduct.compareToIgnoreCase(nextproduct)<=0, "Products are not sorted in A->Z Order");
+		}}
 	
 	public ProductDetailsPage clickonproduct()
 	{
@@ -102,23 +123,17 @@ public class InventoryPage extends ReUseableComponents {
 			product.click();
 
 			Assert.assertFalse(inventoryname.getText().isEmpty(), "Name not Displayed!!");
-
 			Assert.assertFalse(Inventoryprice.getText().isEmpty(), "price not Displayed!!");
-
 			Assert.assertTrue(InventoryImg.isDisplayed(), "Image not dispalyed" + product);
-
 			Assert.assertFalse(InventoryDescription.getText().isEmpty(), "discription not Displayed!!");
-		}
-	}
-
+		}}
+	
 	public void verifyproductprices(String[] expectedprices) {
 		waituntilvisibilityOfAllElementsLocatedBy(allprices);
-
 		for (int i = 0; i < productprice.size(); i++) {
 			String actualprice = productprice.get(i).getText();
 			Assert.assertEquals(actualprice, expectedprices[i], "price mismatch at " + i);
-		}
-	}
+		}}
 
 	public void verifysingleproductaddedtocart(String expectedProductname) {
 		for (int i = 0; i < productnames.size(); i++) {
@@ -126,10 +141,8 @@ public class InventoryPage extends ReUseableComponents {
 			if (actualproductname.equalsIgnoreCase(expectedProductname)) {
 				addtocart.get(i).click();
 				break;
-			}
-		}
-	}
-
+			}}}
+	
 	public void verifycartnumber() {
 		int nuofitemadded = Integer.parseInt(cartnumber.getText());
 		Assert.assertEquals(nuofitemadded, 1, " cart count is incoorect");
@@ -142,22 +155,18 @@ public class InventoryPage extends ReUseableComponents {
 	public void verifyaddtocartbutton() {
 		for (WebElement button : addtocart) {
 			Assert.assertTrue(button.isDisplayed(), "Add to Cart Button Missing");
-		}
-	}
-
+		}}
+	
 	public CartPage verifyaddmutipleproductstocart(String[] productslist) {
 		List<String> items = new ArrayList<String>(Arrays.asList(productslist));
 		for (WebElement product : products) {
 			String ActualProducts = product.findElement(productname).getText().trim();
 			if (items.contains(ActualProducts)) {
 				product.findElement(addtocartcta).click();
-			}
-
-		}
+			}}
 		addtocarticon();
 		CartPage cart = new CartPage(driver);
 		return cart;
-
 	}
 
 	public void verifycartitems(String[] productslist) {
@@ -166,8 +175,7 @@ public class InventoryPage extends ReUseableComponents {
 		for (WebElement cartitem : productnames) {
 			String itemname = cartitem.getText().trim();
 			Assert.assertTrue(items.contains(itemname), itemname + " is not present in the list");
-		}
-	}
+		}}
 
 	public int addallproductstocart(String[] productslist) {
 		int itemsaddedtocart = 0;
@@ -178,8 +186,7 @@ public class InventoryPage extends ReUseableComponents {
 			if (itemlist.contains(Actualnames)) {
 				product.findElement(addtocartbutton).click();
 				itemsaddedtocart++;
-			}
-		}
+			}}
 		Assert.assertEquals(itemlist.size(), itemsaddedtocart);
 		addtocarticon();
 		return itemsaddedtocart;
@@ -201,8 +208,7 @@ public class InventoryPage extends ReUseableComponents {
 			if (producttobeadded.equalsIgnoreCase(ActualProductname)) {
 				product.findElement(addtocartcta).click();
 				break;
-			}
-		}
+			}}
 		addtocarticon();
 		CartPage cart = new CartPage(driver);
 		return cart;
@@ -220,19 +226,16 @@ public class InventoryPage extends ReUseableComponents {
 		String name = "";
 		String description = "";
 		String price = "";
-
+		
 		for (WebElement item : products) {
-
 			name = item.findElement(productname).getText().trim();
 			description = item.findElement(Description).getText().trim();
 			price = item.findElement(allprices).getText().trim();
-
 			if (name.equalsIgnoreCase("Sauce Labs Bolt T-Shirt")) {
 				item.findElement(productname).click();
 				break;
-			}
-		}
-
+			}}
+		
 		return new String[] { name, description, price };
 	}
 
