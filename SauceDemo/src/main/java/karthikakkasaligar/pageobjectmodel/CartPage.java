@@ -55,15 +55,6 @@ public class CartPage extends ReUseableComponents {
 		}
 	}
 
-	public void Removeproductfromcart(String producttobeadded) {
-		Assert.assertEquals(itemincart.size(), 1);
-		for (WebElement cartitem : itemincart) {
-			String cartitemname = cartitem.findElement(productname).getText().trim();
-			if (producttobeadded.equalsIgnoreCase(cartitemname)) {
-				cartitem.findElement(addtocartcta).click();
-			}
-		}
-		Assert.assertEquals(itemincart.size(), 0, "Cart is not empty after removing the product");
-	}
+	
 
 }

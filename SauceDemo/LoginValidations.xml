@@ -3,7 +3,7 @@
 <suite name="Suite">
     <test name="Login_Validations">
         <classes>
-            <class name="karthikakkasaligar.TestCases.Login_Validations"/>
+            <class name="karthikakkasaligar.TestCases.LoginValidations"/>
         </classes>
     </test>
 </suite>

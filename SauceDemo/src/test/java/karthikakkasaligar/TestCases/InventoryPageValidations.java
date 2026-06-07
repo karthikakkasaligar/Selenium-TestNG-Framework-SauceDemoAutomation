@@ -4,12 +4,24 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import karthikakkasaligar.TestComponents.BaseTest;
-import karthikakkasaligar.pageobjectmodel.CartPage;
 import karthikakkasaligar.pageobjectmodel.InventoryPage;
+import karthikakkasaligar.pageobjectmodel.ProductDetailsPage;
 
-public class Cart_Validations extends BaseTest {
+public class InventoryPageValidations extends BaseTest {
 
-	
+	@Test
+	public void VerifyallProductsdisplay() {
+		InventoryPage inventory = login.login(login.getusername(), login.getpassword());
+		inventory.verifyallProductDisplay();
+	}
+
+	@Test
+	public void VerifyProductPricescorrectly() {
+		String expectedprices[] = { "$29.99", "$9.99", "$15.99", "$49.99", "$7.99", "$15.99" };
+		InventoryPage inventory =	login.login(login.getusername(), login.getpassword());
+		inventory.verifyproductprices(expectedprices);
+	}
+
 	@Test
 	public void VerifyAddtoCartBuutonDisplaY() {
 		InventoryPage inventory = login.login(login.getusername(), login.getpassword());
@@ -29,8 +41,7 @@ public class Cart_Validations extends BaseTest {
 	public void AddMultipleProducttoCart() throws InterruptedException {
 		String[] productslist = { "Sauce Labs Fleece Jacket", "Sauce Labs Onesie" };
 		InventoryPage inventory = login.login(login.getusername(), login.getpassword());
-		CartPage cart = inventory.verifyaddmutipleproductstocart(productslist);
-		cart.verifycartitems(productslist);
+		inventory.verifyaddmutipleproducts(productslist);
 	}
 
 	@Test
@@ -38,23 +49,45 @@ public class Cart_Validations extends BaseTest {
 		String[] productslist = { "Sauce Labs Backpack", "Sauce Labs Fleece Jacket", "Sauce Labs Onesie",
 				"Sauce Labs Bike Light", "Sauce Labs Bolt T-Shirt", "Test.allTheThings() T-Shirt (Red)" };
 		InventoryPage inventory = login.login(login.getusername(), login.getpassword());
-		int productsaddtocart = inventory.addallproductstocart(productslist);
-		CartPage cart = new CartPage(driver);
-		cart.verifycartitems(productslist, productsaddtocart);
+		inventory.addallproductstocart(productslist);
+
 	}
 
 	@Test
-	public void Addsingleproductandremovefromcart() {
+	public void VerifyAddandremovesingleproduct() {
 		String producttobeadded = "Sauce Labs Bolt T-Shirt";
 		InventoryPage inventory = login.login(login.getusername(), login.getpassword());
-		CartPage cart = inventory.Addsingleproductandremovefromcart(producttobeadded);
-		cart.Removeproductfromcart(producttobeadded);
+		inventory.Addsingleproductandremove(producttobeadded);
 	}
-	
+
 	@Test
 	public void verifyCartBadgeDisappearsWhenEmpty() {
 		InventoryPage inventory = login.login(login.getusername(), login.getpassword());
 		inventory.verifyCartBadgeDisappearsWhenEmpty();
+	}
+
+	@Test
+	public void verifyopenProductDetailsPage() {
+		InventoryPage inventory = login.login(login.getusername(), login.getpassword());
+		ProductDetailsPage ProductDetails = inventory.clickonproduct();
+		ProductDetails.verifyproductdetailspageurl();
+	}
+
+	@Test
+	public void verifyProductDetailsMatchInventoryPage() {
+
+		InventoryPage Inventory = login.login(login.getusername(), login.getpassword());
+		String[] details = Inventory.ProductDetails();
+		ProductDetailsPage ProductDetails = new ProductDetailsPage(driver);
+		ProductDetails.Detailedproductdetails(details[0], details[1], details[2]);
+	}
+
+	@Test
+	public void verifyBackToProductsButtonFunctionality() {
+		InventoryPage Inventory = login.login(login.getusername(), login.getpassword());
+		ProductDetailsPage ProductDetails = Inventory.clickonproduct();
+		ProductDetails.verifybacktoproductbutton();
+		Inventory.verifyProductPageLoad();
 	}
 
 }

@@ -26,17 +26,11 @@ public class InventoryPage extends ReUseableComponents {
 
 	@FindBy(css = ".inventory_item")
 	List<WebElement> products;
-
-	By allproducts = By.cssSelector(".inventory_item");
-
+	
 	@FindBy(css = ".inventory_item_name")
 	WebElement inventoryname;
 
-	By productname = By.cssSelector(".inventory_item_name");
 	
-	By Description = By.cssSelector(".inventory_item_desc");
-	
-	By addtocartcta = By.tagName("button");
 
 	@FindBy(css = ".inventory_item_name")
 	List<WebElement> productnames;
@@ -79,7 +73,36 @@ public class InventoryPage extends ReUseableComponents {
 	WebElement filter;
 
 	By removecta = By.xpath("//button[text()='Remove']");
+	
+	By allproducts = By.cssSelector(".inventory_item");
 
+	By productname = By.cssSelector(".inventory_item_name");
+	
+	By Description = By.cssSelector(".inventory_item_desc");
+	
+	By addtocartcta = By.tagName("button");
+
+	
+	public void verifypricehightolow() {
+		filter.click();
+		Select s=new Select(filter);
+		s.selectByIndex(3);
+		for(int i=0;i<productprice.size()-1;i++){
+			Double currentprice=Double.parseDouble(productprice.get(i).getText().trim().replace("$", ""));
+			Double nextprice=Double.parseDouble(productprice.get(i+1).getText().trim().replace("$", ""));
+			Assert.assertTrue(currentprice>=nextprice, "Prices are not sorted in High to Low");
+		}}
+			
+	public void verifypricelowtohigh() {
+		filter.click();
+		Select s=new Select(filter);
+		s.selectByIndex(2);
+		for(int i=0; i<productprice.size()-1;i++) {
+			Double currentprice=Double.parseDouble(productprice.get(i).getText().trim().replace("$", ""));
+			Double nextprice=Double.parseDouble(productprice.get(i+1).getText().trim().replace("$", ""));
+			Assert.assertTrue(currentprice<=nextprice, "Price are not sorted from low to high");
+		}}
+		
 	
 	public void verifyZtoAsorting() {
 		filter.click();
@@ -105,7 +128,7 @@ public class InventoryPage extends ReUseableComponents {
 		return ProductDetails;
 	}
 	
-	public void verifyProductDisplay() {
+	public void verifyallProductDisplay() {
 		waituntilvisibilityOfAllElementsLocatedBy(allproducts);
 		Assert.assertFalse(products.isEmpty(), "No Products Found");
 		for (WebElement product : products) {
@@ -117,23 +140,15 @@ public class InventoryPage extends ReUseableComponents {
 		Assert.assertEquals(driver.getCurrentUrl(), "https://www.saucedemo.com/inventory.html");
 	}
 
-	public void VerifyProductdetails() {
-		waituntilvisibilityOfAllElementsLocatedBy(allproducts);
-		for (WebElement product : products) {
-			product.click();
-
-			Assert.assertFalse(inventoryname.getText().isEmpty(), "Name not Displayed!!");
-			Assert.assertFalse(Inventoryprice.getText().isEmpty(), "price not Displayed!!");
-			Assert.assertTrue(InventoryImg.isDisplayed(), "Image not dispalyed" + product);
-			Assert.assertFalse(InventoryDescription.getText().isEmpty(), "discription not Displayed!!");
-		}}
-	
+		
 	public void verifyproductprices(String[] expectedprices) {
 		waituntilvisibilityOfAllElementsLocatedBy(allprices);
 		for (int i = 0; i < productprice.size(); i++) {
 			String actualprice = productprice.get(i).getText();
 			Assert.assertEquals(actualprice, expectedprices[i], "price mismatch at " + i);
+
 		}}
+	
 
 	public void verifysingleproductaddedtocart(String expectedProductname) {
 		for (int i = 0; i < productnames.size(); i++) {
@@ -157,16 +172,14 @@ public class InventoryPage extends ReUseableComponents {
 			Assert.assertTrue(button.isDisplayed(), "Add to Cart Button Missing");
 		}}
 	
-	public CartPage verifyaddmutipleproductstocart(String[] productslist) {
+	public void verifyaddmutipleproducts(String[] productslist) {
 		List<String> items = new ArrayList<String>(Arrays.asList(productslist));
 		for (WebElement product : products) {
 			String ActualProducts = product.findElement(productname).getText().trim();
 			if (items.contains(ActualProducts)) {
 				product.findElement(addtocartcta).click();
 			}}
-		addtocarticon();
-		CartPage cart = new CartPage(driver);
-		return cart;
+		
 	}
 
 	public void verifycartitems(String[] productslist) {
@@ -177,7 +190,7 @@ public class InventoryPage extends ReUseableComponents {
 			Assert.assertTrue(items.contains(itemname), itemname + " is not present in the list");
 		}}
 
-	public int addallproductstocart(String[] productslist) {
+	public void addallproductstocart(String[] productslist) {
 		int itemsaddedtocart = 0;
 		List<String> itemlist = new ArrayList<String>(Arrays.asList(productslist));
 		Assert.assertFalse(products.isEmpty(), "No Products Found");
@@ -188,30 +201,18 @@ public class InventoryPage extends ReUseableComponents {
 				itemsaddedtocart++;
 			}}
 		Assert.assertEquals(itemlist.size(), itemsaddedtocart);
-		addtocarticon();
-		return itemsaddedtocart;
+		
 	}
 
-	public void removalofproductfromcart() {
-		addtocartButton.click();
-		int cartcount = Integer.parseInt(CartBadge.getText().trim());
-		Assert.assertEquals(cartcount, 1);
-		waitforelementtobeclickable(addtocartbutton);
-		Assert.assertEquals(addtocartButton.getText().trim(), "Remove");
-		addtocartButton.click();
-		Assert.assertEquals(addtocartButton.getText().trim(), "Add to cart");
-	}
 
-	public CartPage Addsingleproductandremovefromcart(String producttobeadded) {
+	public void Addsingleproductandremove(String producttobeadded) {
 		for (WebElement product : products) {
 			String ActualProductname = product.findElement(productname).getText().trim();
 			if (producttobeadded.equalsIgnoreCase(ActualProductname)) {
 				product.findElement(addtocartcta).click();
 				break;
 			}}
-		addtocarticon();
-		CartPage cart = new CartPage(driver);
-		return cart;
+	
 	}
 
 	public void verifyCartBadgeDisappearsWhenEmpty() {

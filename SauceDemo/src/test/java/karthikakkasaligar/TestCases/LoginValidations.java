@@ -8,7 +8,7 @@ import org.testng.annotations.Test;
 import karthikakkasaligar.TestComponents.BaseTest;
 import karthikakkasaligar.pageobjectmodel.InventoryPage;
 
-public class Login_Validations extends BaseTest {
+public class LoginValidations extends BaseTest {
 
 	@Test
 	public void loginValidation() throws IOException {
