@@ -16,6 +16,18 @@ public class InventoryPageValidations extends BaseTest {
 	}
 
 	@Test
+	public void Verifyproductnamesdisplayed() {
+		InventoryPage inventory = login.login(login.getusername(), login.getpassword());
+		inventory.verifyproductnamedisplay();
+	}
+
+	@Test
+	public void Verifyprodutimagedisplayed() {
+		InventoryPage inventory = login.login(login.getusername(), login.getpassword());
+		inventory.verifyproductimagedisplay();
+	}
+
+	@Test
 	public void VerifyProductPricescorrectly() {
 		String expectedprices[] = { "$29.99", "$9.99", "$15.99", "$49.99", "$7.99", "$15.99" };
 		InventoryPage inventory = login.login(login.getusername(), login.getpassword());
@@ -54,10 +66,10 @@ public class InventoryPageValidations extends BaseTest {
 	}
 
 	@Test
-	public void VerifyAddandremovesingleproduct() {
+	public void VerifyAddandremoveproduct() {
 		String producttobeadded = "Sauce Labs Bolt T-Shirt";
 		InventoryPage inventory = login.login(login.getusername(), login.getpassword());
-		inventory.Addsingleproductandremove(producttobeadded);
+		inventory.Addandremoveproduct(producttobeadded);
 	}
 
 	@Test

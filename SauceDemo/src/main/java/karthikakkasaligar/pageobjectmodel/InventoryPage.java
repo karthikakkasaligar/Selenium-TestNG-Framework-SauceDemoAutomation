@@ -41,6 +41,9 @@ public class InventoryPage extends ReUseableComponents {
 
 	@FindBy(xpath = "//img[@class='inventory_item_img']")
 	WebElement InventoryImg;
+	
+	@FindBy(xpath = "//div/a/img")
+	List<WebElement> images;
 
 	@FindBy(css = ".inventory_item_desc")
 	WebElement InventoryDescription;
@@ -210,7 +213,7 @@ public class InventoryPage extends ReUseableComponents {
 
 	}
 
-	public void Addsingleproductandremove(String producttobeadded) {
+	public void Addandremoveproduct(String producttobeadded) {
 		for (WebElement product : products) {
 			String ActualProductname = product.findElement(productname).getText().trim();
 			if (producttobeadded.equalsIgnoreCase(ActualProductname)) {
@@ -245,5 +248,16 @@ public class InventoryPage extends ReUseableComponents {
 
 		return new String[] { name, description, price };
 	}
-
+     
+	public void verifyproductnamedisplay() {
+		for(WebElement name:productnames) {
+			Assert.assertTrue(name.isDisplayed(),"Name is not Displaying :" + name);
+		}
+	}
+	
+	public void verifyproductimagedisplay() {
+		for(WebElement image:images) {
+			Assert.assertTrue(image.isDisplayed(), "Image is NOT Displayed" + image);
+		}
+	}
 }
