@@ -42,6 +42,9 @@ public class InventoryPage extends ReUseableComponents {
 	@FindBy(xpath = "//img[@class='inventory_item_img']")
 	WebElement InventoryImg;
 
+	@FindBy(xpath = "//img[@class='inventory_item_img']")
+	List<WebElement> InventoryImgs;
+
 	@FindBy(css = ".inventory_item_desc")
 	WebElement InventoryDescription;
 
@@ -150,7 +153,8 @@ public class InventoryPage extends ReUseableComponents {
 		}
 	}
 
-	public void verifysingleproductaddedtocart(String expectedProductname) {
+	public void verifysingleproductaddedtocart() {
+		String expectedProductname = "Sauce Labs Fleece Jacket";
 		for (int i = 0; i < productnames.size(); i++) {
 			String actualproductname = productnames.get(i).getText();
 			if (actualproductname.equalsIgnoreCase(expectedProductname)) {
@@ -158,6 +162,15 @@ public class InventoryPage extends ReUseableComponents {
 				break;
 			}
 		}
+	}
+	
+	public void AddRemoveAddSameProduct() {
+		addtocartButton.click();
+		Assert.assertEquals(CartBadge.getText(), "1");
+		addtocartButton.click();
+		Assert.assertTrue(cartbadges.isEmpty(), "product is not removed from cart");
+		addtocartButton.click();
+		Assert.assertEquals(CartBadge.getText(), "1");
 	}
 
 	public void verifycartnumber() {
@@ -175,7 +188,8 @@ public class InventoryPage extends ReUseableComponents {
 		}
 	}
 
-	public void verifyaddmutipleproducts(String[] productslist) {
+	public void verifyaddmutipleproducts() {
+		String[] productslist = { "Sauce Labs Fleece Jacket", "Sauce Labs Onesie" };
 		List<String> items = new ArrayList<String>(Arrays.asList(productslist));
 		for (WebElement product : products) {
 			String ActualProducts = product.findElement(productname).getText().trim();
@@ -195,18 +209,39 @@ public class InventoryPage extends ReUseableComponents {
 		}
 	}
 
-	public void addallproductstocart(String[] productslist) {
-		int itemsaddedtocart = 0;
+	public void addallproductstocart() {
+		String[] productslist = { "Sauce Labs Backpack", "Sauce Labs Fleece Jacket", "Sauce Labs Onesie",
+				"Sauce Labs Bike Light", "Sauce Labs Bolt T-Shirt", "Test.allTheThings() T-Shirt (Red)" };
+		int cartlist = 0;
 		List<String> itemlist = new ArrayList<String>(Arrays.asList(productslist));
 		Assert.assertFalse(products.isEmpty(), "No Products Found");
 		for (WebElement product : products) {
 			String Actualnames = product.findElement(productname).getText().trim();
 			if (itemlist.contains(Actualnames)) {
 				product.findElement(addtocartbutton).click();
-				itemsaddedtocart++;
+				cartlist++;
+				if (cartlist == products.size()) {
+					break;
+				}
 			}
 		}
-		Assert.assertEquals(itemlist.size(), itemsaddedtocart);
+	}
+
+	public void removeallproductstocart() {
+		String[] productslist = { "Sauce Labs Backpack", "Sauce Labs Fleece Jacket", "Sauce Labs Onesie",
+				"Sauce Labs Bike Light", "Sauce Labs Bolt T-Shirt", "Test.allTheThings() T-Shirt (Red)" };
+		int cartlist = 0;
+		List<String> itemlist = new ArrayList<String>(Arrays.asList(productslist));
+		for (WebElement product : products) {
+			String Actualnames = product.findElement(productname).getText().trim();
+			if (itemlist.contains(Actualnames)) {
+				product.findElement(addtocartbutton).click();
+				cartlist--;
+				if (cartlist == 0) {
+					break;
+				}
+			}
+		}
 
 	}
 
@@ -245,10 +280,16 @@ public class InventoryPage extends ReUseableComponents {
 
 		return new String[] { name, description, price };
 	}
-	
+
 	public void verifyproductnamedisplay() {
-		for(WebElement name:productnames) {
-			Assert.assertTrue(name.isDisplayed(), "Name is Not Displayed " + name );
+		for (WebElement name : productnames) {
+			Assert.assertTrue(name.isDisplayed(), "Name is Not Displayed " + name);
+		}
+	}
+
+	public void verifyproductimagedisplay() {
+		for (WebElement image : InventoryImgs) {
+			Assert.assertTrue(image.isDisplayed(), "Image is not visible" + image);
 		}
 	}
 

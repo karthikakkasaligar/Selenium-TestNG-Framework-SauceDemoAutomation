@@ -14,12 +14,11 @@ public class InventoryPageValidations extends BaseTest {
 		InventoryPage inventory = login.login(login.getusername(), login.getpassword());
 		inventory.verifyallProductDisplay();
 	}
-	
+
 	@Test
 	public void Verifyproductnamedisplayed() {
 		InventoryPage inventory = login.login(login.getusername(), login.getpassword());
 		inventory.verifyproductnamedisplay();
-		
 	}
 
 	@Test
@@ -27,6 +26,12 @@ public class InventoryPageValidations extends BaseTest {
 		String expectedprices[] = { "$29.99", "$9.99", "$15.99", "$49.99", "$7.99", "$15.99" };
 		InventoryPage inventory = login.login(login.getusername(), login.getpassword());
 		inventory.verifyproductprices(expectedprices);
+	}
+
+	@Test
+	public void verifyproductimagedisplayed() {
+		InventoryPage inventory = login.login(login.getusername(), login.getpassword());
+		inventory.verifyproductimagedisplay();
 	}
 
 	@Test
@@ -38,35 +43,45 @@ public class InventoryPageValidations extends BaseTest {
 
 	@Test
 	public void AddSingleProducttocart() {
-		String expectedProductname = "Sauce Labs Fleece Jacket";
+		
 		InventoryPage inventory = login.login(login.getusername(), login.getpassword());
-		inventory.verifysingleproductaddedtocart(expectedProductname);
+		inventory.verifysingleproductaddedtocart();
 		inventory.verifycartnumber();
 	}
 
 	@Test
 	public void AddMultipleProducttoCart() throws InterruptedException {
-		String[] productslist = { "Sauce Labs Fleece Jacket", "Sauce Labs Onesie" };
+		
 		InventoryPage inventory = login.login(login.getusername(), login.getpassword());
-		inventory.verifyaddmutipleproducts(productslist);
+		inventory.verifyaddmutipleproducts();
 	}
 
 	@Test
 	public void Addallproductstocart() {
-		String[] productslist = { "Sauce Labs Backpack", "Sauce Labs Fleece Jacket", "Sauce Labs Onesie",
-				"Sauce Labs Bike Light", "Sauce Labs Bolt T-Shirt", "Test.allTheThings() T-Shirt (Red)" };
 		InventoryPage inventory = login.login(login.getusername(), login.getpassword());
-		inventory.addallproductstocart(productslist);
-
+		inventory.addallproductstocart();
 	}
 
 	@Test
-	public void VerifyAddandproduct() {
+	public void VerifyAddandremoveproduct() {
 		String producttobeadded = "Sauce Labs Bolt T-Shirt";
 		InventoryPage inventory = login.login(login.getusername(), login.getpassword());
 		inventory.Addandremoveproduct(producttobeadded);
 	}
 
+	@Test
+	public void removeAllProductsFromInventory() {
+		InventoryPage inventory = login.login(login.getusername(), login.getpassword());
+		inventory.addallproductstocart();
+		inventory.removeallproductstocart();
+	}
+
+	@Test
+	public void AddRemoveAddSameProduct() {
+		InventoryPage inventory = login.login(login.getusername(), login.getpassword());
+		inventory.AddRemoveAddSameProduct();	
+	}
+	
 	@Test
 	public void verifyCartBadgeDisappearsWhenEmpty() {
 		InventoryPage inventory = login.login(login.getusername(), login.getpassword());
