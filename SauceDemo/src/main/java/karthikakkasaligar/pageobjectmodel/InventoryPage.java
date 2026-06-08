@@ -210,7 +210,7 @@ public class InventoryPage extends ReUseableComponents {
 
 	}
 
-	public void Addsingleproductandremove(String producttobeadded) {
+	public void Addandremoveproduct(String producttobeadded) {
 		for (WebElement product : products) {
 			String ActualProductname = product.findElement(productname).getText().trim();
 			if (producttobeadded.equalsIgnoreCase(ActualProductname)) {
@@ -244,6 +244,12 @@ public class InventoryPage extends ReUseableComponents {
 		}
 
 		return new String[] { name, description, price };
+	}
+	
+	public void verifyproductnamedisplay() {
+		for(WebElement name:productnames) {
+			Assert.assertTrue(name.isDisplayed(), "Name is Not Displayed " + name );
+		}
 	}
 
 }

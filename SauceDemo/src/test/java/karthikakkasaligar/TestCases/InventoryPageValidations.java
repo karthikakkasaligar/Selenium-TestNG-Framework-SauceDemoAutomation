@@ -14,6 +14,13 @@ public class InventoryPageValidations extends BaseTest {
 		InventoryPage inventory = login.login(login.getusername(), login.getpassword());
 		inventory.verifyallProductDisplay();
 	}
+	
+	@Test
+	public void Verifyproductnamedisplayed() {
+		InventoryPage inventory = login.login(login.getusername(), login.getpassword());
+		inventory.verifyproductnamedisplay();
+		
+	}
 
 	@Test
 	public void VerifyProductPricescorrectly() {
@@ -54,10 +61,10 @@ public class InventoryPageValidations extends BaseTest {
 	}
 
 	@Test
-	public void VerifyAddandremovesingleproduct() {
+	public void VerifyAddandproduct() {
 		String producttobeadded = "Sauce Labs Bolt T-Shirt";
 		InventoryPage inventory = login.login(login.getusername(), login.getpassword());
-		inventory.Addsingleproductandremove(producttobeadded);
+		inventory.Addandremoveproduct(producttobeadded);
 	}
 
 	@Test
