@@ -43,7 +43,7 @@ public class InventoryPageValidations extends BaseTest {
 
 	@Test
 	public void AddSingleProducttocart() {
-		
+
 		InventoryPage inventory = login.login(login.getusername(), login.getpassword());
 		inventory.verifysingleproductaddedtocart();
 		inventory.verifycartnumber();
@@ -51,7 +51,7 @@ public class InventoryPageValidations extends BaseTest {
 
 	@Test
 	public void AddMultipleProducttoCart() throws InterruptedException {
-		
+
 		InventoryPage inventory = login.login(login.getusername(), login.getpassword());
 		inventory.verifyaddmutipleproducts();
 	}
@@ -79,9 +79,9 @@ public class InventoryPageValidations extends BaseTest {
 	@Test
 	public void AddRemoveAddSameProduct() {
 		InventoryPage inventory = login.login(login.getusername(), login.getpassword());
-		inventory.AddRemoveAddSameProduct();	
+		inventory.AddRemoveAddSameProduct();
 	}
-	
+
 	@Test
 	public void verifyCartBadgeDisappearsWhenEmpty() {
 		InventoryPage inventory = login.login(login.getusername(), login.getpassword());

@@ -163,7 +163,7 @@ public class InventoryPage extends ReUseableComponents {
 			}
 		}
 	}
-	
+
 	public void AddRemoveAddSameProduct() {
 		addtocartButton.click();
 		Assert.assertEquals(CartBadge.getText(), "1");
@@ -291,6 +291,30 @@ public class InventoryPage extends ReUseableComponents {
 		for (WebElement image : InventoryImgs) {
 			Assert.assertTrue(image.isDisplayed(), "Image is not visible" + image);
 		}
+	}
+
+	public void deafultsortingafterrefresh() {
+		String itemsbeforerefresh = "";
+		String newprodutsAS = "";
+		String newprodutsAR = "";
+		for (WebElement product : productnames) {
+			itemsbeforerefresh += product.getText().trim();
+		}
+		filter.click();
+		Select s = new Select(filter);
+		s.selectByIndex(1);
+
+		for (WebElement produtsAS : productnames) {
+			newprodutsAS += produtsAS.getText().trim();
+		}
+		Assert.assertNotEquals(itemsbeforerefresh, newprodutsAS, "Filter not applied");
+
+		driver.navigate().refresh();
+
+		for (WebElement produtsAR : productnames) {
+			newprodutsAR += produtsAR.getText().trim();
+		}
+		Assert.assertEquals(newprodutsAR, itemsbeforerefresh, "Products are not matching");
 	}
 
 }

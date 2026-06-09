@@ -31,5 +31,11 @@ public class SortingValidations extends BaseTest {
 		InventoryPage inventory = login.login(login.getusername(), login.getpassword());
 		inventory.verifypricelowtohigh();
 	}
+	
+	@Test
+	public void verifydefaultSortingAfterPageRefresh() {
+		InventoryPage inventory = login.login(login.getusername(), login.getpassword());
+		inventory.deafultsortingafterrefresh();
+	}
 
 }
