@@ -15,20 +15,20 @@ public class InventoryPageValidations extends BaseTest {
 		inventory.verifyallProductDisplay();
 	}
 
-	@Test
+	@Test(groups = { "ProductVerification"})
 	public void Verifyproductnamedisplayed() {
 		InventoryPage inventory = login.login(login.getusername(), login.getpassword());
 		inventory.verifyproductnamedisplay();
 	}
 
-	@Test
+	@Test(groups = "ProductVerification")
 	public void VerifyProductPricescorrectly() {
 		String expectedprices[] = { "$29.99", "$9.99", "$15.99", "$49.99", "$7.99", "$15.99" };
 		InventoryPage inventory = login.login(login.getusername(), login.getpassword());
 		inventory.verifyproductprices(expectedprices);
 	}
 
-	@Test
+	@Test(groups = "ProductVerification")
 	public void verifyproductimagedisplayed() {
 		InventoryPage inventory = login.login(login.getusername(), login.getpassword());
 		inventory.verifyproductimagedisplay();

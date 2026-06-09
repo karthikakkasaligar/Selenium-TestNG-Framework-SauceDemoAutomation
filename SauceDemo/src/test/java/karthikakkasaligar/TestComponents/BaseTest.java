@@ -54,7 +54,7 @@ public class BaseTest {
 	}
 	
 	
-	@BeforeMethod
+	@BeforeMethod(alwaysRun = true)
 	public LoginPage lunchapplication() throws IOException
 	{
 		 driver= intilizedriver();
@@ -63,7 +63,7 @@ public class BaseTest {
 		 return login;	 
 	}
 	
-	@AfterMethod
+	@AfterMethod(alwaysRun = true)
 	public void teardown() {
 		driver.quit();
 	}

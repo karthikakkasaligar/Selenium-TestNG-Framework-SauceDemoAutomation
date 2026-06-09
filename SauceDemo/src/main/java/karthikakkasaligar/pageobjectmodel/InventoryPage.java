@@ -303,18 +303,25 @@ public class InventoryPage extends ReUseableComponents {
 		filter.click();
 		Select s = new Select(filter);
 		s.selectByIndex(1);
-
 		for (WebElement produtsAS : productnames) {
 			newprodutsAS += produtsAS.getText().trim();
 		}
 		Assert.assertNotEquals(itemsbeforerefresh, newprodutsAS, "Filter not applied");
-
 		driver.navigate().refresh();
-
 		for (WebElement produtsAR : productnames) {
 			newprodutsAR += produtsAR.getText().trim();
 		}
 		Assert.assertEquals(newprodutsAR, itemsbeforerefresh, "Products are not matching");
+	}
+	
+	public void verifydropdownvalues() {
+		 String[] expectedOptions= {"Name (A to Z)","Name (Z to A)","Price (low to high)","Price (high to low)"};
+		  Select select=new Select(filter);
+		  List<WebElement> options=select.getOptions();
+		  Assert.assertEquals(options.size(), expectedOptions.length, "Options count Mismatch");
+		  for(int i=0;i<options.size();i++) {
+			  Assert.assertEquals(options.get(i).getText().trim(),expectedOptions[i], "Mismatch in Dropdown Value");
+		  }
 	}
 
 }
