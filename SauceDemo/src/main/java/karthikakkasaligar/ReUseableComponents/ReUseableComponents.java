@@ -11,6 +11,8 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import karthikakkasaligar.pageobjectmodel.CartPage;
+
 public class ReUseableComponents {
 
 	WebDriver driver;
@@ -37,8 +39,11 @@ public class ReUseableComponents {
 		wait.until(ExpectedConditions.elementToBeClickable(elementtobeclickable));
 	}
 
-	public void addtocarticon() {
+	public CartPage clickcarticon() {
 		carticon.click();
+		CartPage cart= new CartPage(driver);
+		return cart;
+		
 	}
 	
 	

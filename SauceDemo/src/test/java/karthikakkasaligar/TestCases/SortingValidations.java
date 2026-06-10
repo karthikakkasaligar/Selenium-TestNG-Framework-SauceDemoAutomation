@@ -1,11 +1,5 @@
 package karthikakkasaligar.TestCases;
 
-import java.util.List;
-
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.Select;
-import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import karthikakkasaligar.TestComponents.BaseTest;
@@ -48,6 +42,12 @@ public class SortingValidations extends BaseTest {
 	public void Verifysortdropdownvalues() {
 		InventoryPage inventory = login.login(login.getusername(), login.getpassword());
 		inventory.verifydropdownvalues();	
+	}
+	
+	@Test
+	public void Verifydefaultsortingoption() {
+		InventoryPage inventory = login.login(login.getusername(), login.getpassword());
+		inventory.verifydefaultfilter();
 	}
 
 }

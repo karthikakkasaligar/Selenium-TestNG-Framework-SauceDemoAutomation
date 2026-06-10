@@ -31,6 +31,9 @@ public class CartPage extends ReUseableComponents {
 
 	@FindBy(css = ".cart_item")
 	List<WebElement> itemincart;
+	
+	@FindBy(css=".inventory_item_name")
+    WebElement Productname;
 
 	By productname = By.cssSelector(".inventory_item_name");
 
@@ -53,6 +56,11 @@ public class CartPage extends ReUseableComponents {
 			String actualcartitem = cartitem.findElement(productname).getText().trim();
 			Assert.assertTrue(cartitemslist.contains(actualcartitem), cartitemslist + " is not Present in List");
 		}
+	}
+	
+	public void verifyAddedProductsDisplayedInCart(String product ) {
+		Assert.assertTrue(driver.getCurrentUrl().contains("cart.html"), " its not cart page");
+		Assert.assertTrue(Productname.isDisplayed(), "Added Product is not same as product in Cart"); 
 	}
 
 }

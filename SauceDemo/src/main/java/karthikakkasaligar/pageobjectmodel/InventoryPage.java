@@ -68,7 +68,11 @@ public class InventoryPage extends ReUseableComponents {
 
 	@FindBy(css = ".product_sort_container")
 	WebElement filter;
-
+	
+	@FindBy(css=".active_option")
+	WebElement activefilter;
+	
+	
 	By removecta = By.xpath("//button[text()='Remove']");
 
 	By allproducts = By.cssSelector(".inventory_item");
@@ -153,7 +157,7 @@ public class InventoryPage extends ReUseableComponents {
 		}
 	}
 
-	public void verifysingleproductaddedtocart() {
+	public String verifysingleproductaddedtocart() {
 		String expectedProductname = "Sauce Labs Fleece Jacket";
 		for (int i = 0; i < productnames.size(); i++) {
 			String actualproductname = productnames.get(i).getText();
@@ -162,6 +166,7 @@ public class InventoryPage extends ReUseableComponents {
 				break;
 			}
 		}
+		return expectedProductname;
 	}
 
 	public void AddRemoveAddSameProduct() {
@@ -322,6 +327,10 @@ public class InventoryPage extends ReUseableComponents {
 		  for(int i=0;i<options.size();i++) {
 			  Assert.assertEquals(options.get(i).getText().trim(),expectedOptions[i], "Mismatch in Dropdown Value");
 		  }
+	}
+	
+	public void verifydefaultfilter() {
+		Assert.assertEquals(activefilter.getText().trim() ,"Name (A to Z)");
 	}
 
 }
