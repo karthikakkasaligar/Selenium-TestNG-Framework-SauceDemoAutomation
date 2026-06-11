@@ -7,7 +7,7 @@ import karthikakkasaligar.TestComponents.BaseTest;
 import karthikakkasaligar.pageobjectmodel.CartPage;
 import karthikakkasaligar.pageobjectmodel.InventoryPage;
 
-public class CartValidations extends BaseTest {
+public class CartValidations extends BaseTest{
 
 	@Test
 	public void verifyAddedProductsDisplayedInCart() {
