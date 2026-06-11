@@ -31,13 +31,15 @@ public class CartPage extends ReUseableComponents {
 
 	@FindBy(css = ".cart_item")
 	List<WebElement> itemincart;
-	
-	@FindBy(css=".inventory_item_name")
-    WebElement Productname;
+
+	@FindBy(css = ".inventory_item_name")
+	WebElement Productname;
 
 	By productname = By.cssSelector(".inventory_item_name");
 
 	By addtocartcta = By.tagName("button");
+
+	By PPrice = By.cssSelector(".inventory_item_price");
 
 	public void verifycartitems(String[] productslist) {
 		List<String> items = new ArrayList<String>(Arrays.asList(productslist));
@@ -57,10 +59,27 @@ public class CartPage extends ReUseableComponents {
 			Assert.assertTrue(cartitemslist.contains(actualcartitem), cartitemslist + " is not Present in List");
 		}
 	}
-	
-	public void verifyAddedProductsDisplayedInCart(String product ) {
+
+	public void verifyAddedProductsDisplayedInCart(String product) {
 		Assert.assertTrue(driver.getCurrentUrl().contains("cart.html"), " its not cart page");
-		Assert.assertTrue(Productname.isDisplayed(), "Added Product is not same as product in Cart"); 
+		Assert.assertTrue(Productname.isDisplayed(), "Added Product is not same as product in Cart");
 	}
 
+	public void VerifyProductnameincart(String expectedProductname) {
+		Assert.assertTrue(driver.getCurrentUrl().contains("cart.html"), " its not cart page");
+		Assert.assertEquals(Productname.getText().trim(), expectedProductname);
+	}
+
+	public Double verifycartitemprice(String expectedProductname) {
+		Double cartPrice = null;
+		for (WebElement cartitem : itemincart) {
+			String cartitemname = cartitem.findElement(productname).getText().trim();
+			if (cartitemname.equals(expectedProductname)) {
+				String price = cartitem.findElement(PPrice).getText().trim().replace("$", "");
+				cartPrice = Double.parseDouble(price);
+				break;
+			}
+		}
+		return cartPrice;
+	}
 }

@@ -68,11 +68,10 @@ public class InventoryPage extends ReUseableComponents {
 
 	@FindBy(css = ".product_sort_container")
 	WebElement filter;
-	
-	@FindBy(css=".active_option")
+
+	@FindBy(css = ".active_option")
 	WebElement activefilter;
-	
-	
+
 	By removecta = By.xpath("//button[text()='Remove']");
 
 	By allproducts = By.cssSelector(".inventory_item");
@@ -318,19 +317,35 @@ public class InventoryPage extends ReUseableComponents {
 		}
 		Assert.assertEquals(newprodutsAR, itemsbeforerefresh, "Products are not matching");
 	}
-	
+
 	public void verifydropdownvalues() {
-		 String[] expectedOptions= {"Name (A to Z)","Name (Z to A)","Price (low to high)","Price (high to low)"};
-		  Select select=new Select(filter);
-		  List<WebElement> options=select.getOptions();
-		  Assert.assertEquals(options.size(), expectedOptions.length, "Options count Mismatch");
-		  for(int i=0;i<options.size();i++) {
-			  Assert.assertEquals(options.get(i).getText().trim(),expectedOptions[i], "Mismatch in Dropdown Value");
-		  }
+		String[] expectedOptions = { "Name (A to Z)", "Name (Z to A)", "Price (low to high)", "Price (high to low)" };
+		Select select = new Select(filter);
+		List<WebElement> options = select.getOptions();
+		Assert.assertEquals(options.size(), expectedOptions.length, "Options count Mismatch");
+		for (int i = 0; i < options.size(); i++) {
+			Assert.assertEquals(options.get(i).getText().trim(), expectedOptions[i], "Mismatch in Dropdown Value");
+		}
 	}
-	
+
 	public void verifydefaultfilter() {
-		Assert.assertEquals(activefilter.getText().trim() ,"Name (A to Z)");
+		Assert.assertEquals(activefilter.getText().trim(), "Name (A to Z)");
+	}
+
+	public Double verifyproductpriceinventorypage(String expectedProductname) {
+		Double itemPrice = null;
+		for (WebElement product : products) {
+			String name = product.findElement(productname).getText().trim();
+			if (name.equalsIgnoreCase(expectedProductname)) {
+				String price = product.findElement(allprices).getText().trim().replace("$", "");
+				itemPrice = Double.parseDouble(price);
+				product.findElement(addtocartcta).click();
+				break;
+			}
+		}
+		return itemPrice;
+		
+  
 	}
 
 }
