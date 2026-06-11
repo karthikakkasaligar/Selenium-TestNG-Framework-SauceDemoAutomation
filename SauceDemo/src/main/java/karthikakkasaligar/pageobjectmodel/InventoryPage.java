@@ -344,8 +344,17 @@ public class InventoryPage extends ReUseableComponents {
 			}
 		}
 		return itemPrice;
-		
-  
+
 	}
 
+	public void addsingleproducttocart(String expectedProductname) {
+		for (int i = 0; i < productnames.size(); i++) {
+			String actualproductname = productnames.get(i).getText();
+			if (actualproductname.equalsIgnoreCase(expectedProductname)) {
+				addtocart.get(i).click();
+				break;
+			}
+		}
+
+	}
 }

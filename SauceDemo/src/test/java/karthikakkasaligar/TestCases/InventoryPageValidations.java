@@ -43,7 +43,6 @@ public class InventoryPageValidations extends BaseTest {
 
 	@Test
 	public void AddSingleProducttocart() {
-
 		InventoryPage inventory = login.login(login.getusername(), login.getpassword());
 		inventory.verifysingleproductaddedtocart();
 		inventory.verifycartnumber();

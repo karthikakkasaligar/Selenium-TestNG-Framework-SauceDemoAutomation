@@ -32,6 +32,9 @@ public class CartPage extends ReUseableComponents {
 	@FindBy(css = ".cart_item")
 	List<WebElement> itemincart;
 
+	@FindBy(css = ".shopping_cart_badge")
+	List<WebElement> Badgecount;
+
 	@FindBy(css = ".inventory_item_name")
 	WebElement Productname;
 
@@ -81,5 +84,17 @@ public class CartPage extends ReUseableComponents {
 			}
 		}
 		return cartPrice;
+	}
+
+	public void removesingleaddedproductincart(String expectedProductname) {
+		Assert.assertEquals(itemincart.size(), 1);
+		for (WebElement item : itemincart) {
+			String name = item.findElement(productname).getText().trim();
+			Assert.assertEquals(expectedProductname, name);
+			item.findElement(addtocartcta).click();
+			break;
+		}
+		Assert.assertTrue(Badgecount.isEmpty(), "Item is Not Removed from Cart");
+
 	}
 }

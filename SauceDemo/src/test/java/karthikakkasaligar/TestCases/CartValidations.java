@@ -34,5 +34,14 @@ public class CartValidations extends BaseTest {
 		double cartitemprice= cart.verifycartitemprice(expectedProductname);
 		Assert.assertEquals(itemprice, cartitemprice);
 	}
+	
+	@Test
+	public void removeOneProductFromCart() {
+		String expectedProductname = "Sauce Labs Fleece Jacket";
+		InventoryPage inventory = login.login(login.getusername(), login.getpassword());
+		inventory.addsingleproducttocart(expectedProductname);
+		CartPage cart = inventory.clickcarticon();
+		cart.removesingleaddedproductincart(expectedProductname);
+	}
 }
 
