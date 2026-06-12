@@ -246,7 +246,7 @@ public class InventoryPage extends ReUseableComponents {
 				}
 			}
 		}
-
+	
 	}
 
 	public void Addandremoveproduct(String producttobeadded) {

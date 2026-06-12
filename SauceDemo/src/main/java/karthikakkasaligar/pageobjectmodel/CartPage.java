@@ -37,6 +37,12 @@ public class CartPage extends ReUseableComponents {
 
 	@FindBy(css = ".inventory_item_name")
 	WebElement Productname;
+	
+	@FindBy(id="continue-shopping")
+	WebElement continueshopping;
+	
+	@FindBy(id="checkout")
+	WebElement checkoutcta;
 
 	By productname = By.cssSelector(".inventory_item_name");
 
@@ -95,6 +101,33 @@ public class CartPage extends ReUseableComponents {
 			break;
 		}
 		Assert.assertTrue(Badgecount.isEmpty(), "Item is Not Removed from Cart");
-
+	}
+	
+	public void removeallproductsfromcart(String[] productslist) {
+		int productsremoved=0;
+		List<String> items=new ArrayList<String>(Arrays.asList(productslist));
+		Assert.assertEquals(itemincart.size(),6);
+		for(WebElement cartitem :itemincart) {
+			String cartitemname=cartitem.findElement(productname).getText().trim();
+			if(items.contains(cartitemname)) {
+				cartitem.findElement(addtocartcta).click();
+				productsremoved--;
+				if(productsremoved==0) {
+					break;
+				}
+				
+			}
+		}
+	  Assert.assertTrue(Badgecount.isEmpty(),"all products are not removed");
+	}
+	
+	public void verifyclickoncontinue() {
+		continueshopping.click();
+		Assert.assertTrue(driver.getCurrentUrl().contains("inventory.html"), "continue-shopping button is not functional");
+	}
+	
+	public void verifycheckoutbutton() {
+		checkoutcta.click();
+		Assert.assertTrue(driver.getCurrentUrl().contains("checkout-step"),"checkout button is not working" );
 	}
 }
