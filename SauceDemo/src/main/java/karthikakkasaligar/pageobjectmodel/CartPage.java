@@ -135,9 +135,11 @@ public class CartPage extends ReUseableComponents {
 				"continue-shopping button is not functional");
 	}
 
-	public void verifycheckoutbutton() {
+	public CheckoutInformationPage verifycheckoutbutton() {
 		checkoutcta.click();
 		Assert.assertTrue(driver.getCurrentUrl().contains("checkout-step"), "checkout button is not working");
+		CheckoutInformationPage Checkout = new CheckoutInformationPage(driver);
+		return Checkout;
 	}
 
 	public void refreshcartitem(String expectedProductname) {
