@@ -26,6 +26,9 @@ public class CartPage extends ReUseableComponents {
 	@FindBy(css = ".cart_list")
 	List<WebElement> cartitems;
 
+	@FindBy(css = ".cart_quantity")
+	List<WebElement> cartquantity;
+
 	@FindBy(css = ".inventory_item_name")
 	List<WebElement> productnames;
 
@@ -34,14 +37,17 @@ public class CartPage extends ReUseableComponents {
 
 	@FindBy(css = ".shopping_cart_badge")
 	List<WebElement> Badgecount;
+	
+	@FindBy(css = ".shopping_cart_badge")
+	WebElement badgecount;
 
 	@FindBy(css = ".inventory_item_name")
 	WebElement Productname;
-	
-	@FindBy(id="continue-shopping")
+
+	@FindBy(id = "continue-shopping")
 	WebElement continueshopping;
-	
-	@FindBy(id="checkout")
+
+	@FindBy(id = "checkout")
 	WebElement checkoutcta;
 
 	By productname = By.cssSelector(".inventory_item_name");
@@ -49,6 +55,8 @@ public class CartPage extends ReUseableComponents {
 	By addtocartcta = By.tagName("button");
 
 	By PPrice = By.cssSelector(".inventory_item_price");
+
+	By Cartquantity = By.cssSelector(".cart_quantity");
 
 	public void verifycartitems(String[] productslist) {
 		List<String> items = new ArrayList<String>(Arrays.asList(productslist));
@@ -102,32 +110,66 @@ public class CartPage extends ReUseableComponents {
 		}
 		Assert.assertTrue(Badgecount.isEmpty(), "Item is Not Removed from Cart");
 	}
-	
+
 	public void removeallproductsfromcart(String[] productslist) {
-		int productsremoved=0;
-		List<String> items=new ArrayList<String>(Arrays.asList(productslist));
-		Assert.assertEquals(itemincart.size(),6);
-		for(WebElement cartitem :itemincart) {
-			String cartitemname=cartitem.findElement(productname).getText().trim();
-			if(items.contains(cartitemname)) {
+		int productsremoved = 0;
+		List<String> items = new ArrayList<String>(Arrays.asList(productslist));
+		Assert.assertEquals(itemincart.size(), 6);
+		for (WebElement cartitem : itemincart) {
+			String cartitemname = cartitem.findElement(productname).getText().trim();
+			if (items.contains(cartitemname)) {
 				cartitem.findElement(addtocartcta).click();
 				productsremoved--;
-				if(productsremoved==0) {
+				if (productsremoved == 0) {
 					break;
 				}
-				
+
 			}
 		}
-	  Assert.assertTrue(Badgecount.isEmpty(),"all products are not removed");
+		Assert.assertTrue(Badgecount.isEmpty(), "all products are not removed");
 	}
-	
+
 	public void verifyclickoncontinue() {
 		continueshopping.click();
-		Assert.assertTrue(driver.getCurrentUrl().contains("inventory.html"), "continue-shopping button is not functional");
+		Assert.assertTrue(driver.getCurrentUrl().contains("inventory.html"),
+				"continue-shopping button is not functional");
 	}
-	
+
 	public void verifycheckoutbutton() {
 		checkoutcta.click();
-		Assert.assertTrue(driver.getCurrentUrl().contains("checkout-step"),"checkout button is not working" );
+		Assert.assertTrue(driver.getCurrentUrl().contains("checkout-step"), "checkout button is not working");
 	}
+
+	public void refreshcartitem(String expectedProductname) {
+
+		getcartitem(expectedProductname);
+		driver.navigate().refresh();
+		getcartitem(expectedProductname);
+	}
+
+	public void getcartitem(String expectedProductname) {
+		for (WebElement cartitem : itemincart) {
+			String name = cartitem.findElement(By.cssSelector(".inventory_item_name")).getText().trim();
+			Assert.assertEquals(expectedProductname, name);
+		}
+	}
+
+	public void Verifyquantitydisplayed(String[] productslist) {
+		List<String> items = new ArrayList<String>(Arrays.asList(productslist));
+		for (WebElement cartitem : itemincart) {
+			String name = cartitem.findElement(productname).getText().trim();
+			String quantity = cartitem.findElement(Cartquantity).getText().trim();
+			Assert.assertTrue(items.contains(name), "Unexpected Product Found" + name);
+			Assert.assertEquals(quantity, "1", "Product count Mismatch" + quantity);
+		}
+
+	}
+	
+	public void verifycartcount() {
+		String cartcount=badgecount.getText().trim();
+	    Integer Badgecount=Integer.parseInt(cartcount);
+		List<WebElement> cartitems=driver.findElements(By.cssSelector(".cart_item"));
+		Assert.assertEquals(cartitems.size(),Badgecount);
+	}
+
 }

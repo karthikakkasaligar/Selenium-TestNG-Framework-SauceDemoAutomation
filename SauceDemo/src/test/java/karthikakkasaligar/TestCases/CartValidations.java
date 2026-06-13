@@ -1,6 +1,9 @@
 package karthikakkasaligar.TestCases;
 
+import java.util.List;
+
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -72,4 +75,32 @@ public class CartValidations extends BaseTest {
 		CartPage cart = inventory.clickcarticon();
 		cart.verifycheckoutbutton();
 	}
+
+	@Test
+	public void refreshcartpage() {
+		String expectedProductname = "Sauce Labs Fleece Jacket";
+		InventoryPage inventory = login.login(login.getusername(), login.getpassword());
+		inventory.addsingleproducttocart(expectedProductname);
+		CartPage cart = inventory.clickcarticon();
+		cart.refreshcartitem(expectedProductname);
+	}
+
+	@Test
+	public void Verifyquantitydisplayed() {
+		String[] productslist = { "Sauce Labs Backpack", "Sauce Labs Fleece Jacket", "Sauce Labs Onesie",
+				"Sauce Labs Bike Light", "Sauce Labs Bolt T-Shirt", "Test.allTheThings() T-Shirt (Red)" };
+		InventoryPage inventory = login.login(login.getusername(), login.getpassword());
+		inventory.addallproductstocart();
+		CartPage cart = inventory.clickcarticon();
+		cart.Verifyquantitydisplayed(productslist);
+	}
+
+	@Test
+	public void Verifycartcountequalsactualcartitems() {
+		InventoryPage inventory = login.login(login.getusername(), login.getpassword());
+		inventory.addallproductstocart();
+		CartPage cart = inventory.clickcarticon();
+		cart.verifycartcount();
+	}
+
 }
