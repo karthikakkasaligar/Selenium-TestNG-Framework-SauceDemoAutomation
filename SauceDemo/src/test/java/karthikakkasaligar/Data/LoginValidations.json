@@ -1,0 +1,11 @@
+[
+	
+	{
+		"Validusername" : "standard_user",
+		"Password"      : "secret_sauce",
+		"LockedUser"    : "locked_out_user",
+		"WrongPassword" : "kkahsgha",
+		"WrongUsername" : "FHAFAFASFAJ"
+	}
+	
+]

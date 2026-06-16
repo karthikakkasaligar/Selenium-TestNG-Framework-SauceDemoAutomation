@@ -82,23 +82,23 @@ public class LoginPage extends ReUseableComponents {
 		return passwordTxt.getAttribute("type");
 	}
 
-	public InventoryPage login(String username, String Password) {
-		usernameTxt.sendKeys(username);
+	public InventoryPage login(String Validusername, String Password) {
+		usernameTxt.sendKeys(Validusername);
 		passwordTxt.sendKeys(Password);
 		submitCTA.click();
 		InventoryPage inventory = new InventoryPage(driver);
 		return inventory;
 	}
 
-	public void wrongPasswordLogin(String username, String wrongpassword) {
-		usernameTxt.sendKeys(username);
-		passwordTxt.sendKeys(wrongpassword);
+	public void wrongPasswordLogin(String Validusername, String WrongPassword) {
+		usernameTxt.sendKeys(Validusername);
+		passwordTxt.sendKeys(WrongPassword);
 		submitCTA.click();
 		waitforvisibilityofwebelement(waitforerrormsg);
 	}
 
-	public void wrongUsernameLogin(String wrongUsername, String Password) {
-		usernameTxt.sendKeys(wrongUsername);
+	public void wrongUsernameLogin(String WrongUsername, String Password) {
+		usernameTxt.sendKeys(WrongUsername);
 		passwordTxt.sendKeys(Password);
 		submitCTA.click();
 		waitforvisibilityofwebelement(waitforerrormsg);
@@ -110,22 +110,22 @@ public class LoginPage extends ReUseableComponents {
 		waitforvisibilityofwebelement(waitforerrormsg);
 	}
 
-	public void EmptyPassword(String username) {
-		usernameTxt.sendKeys(username);
+	public void EmptyPassword(String Validusername) {
+		usernameTxt.sendKeys(Validusername);
 		submitCTA.click();
 		waitforvisibilityofwebelement(waitforerrormsg);
 	}
 
-	public void lockeduserlogin(String username, String Password) {
-		usernameTxt.sendKeys(username);
+	public void lockeduserlogin(String LockedUser, String Password) {
+		usernameTxt.sendKeys(LockedUser);
 		passwordTxt.sendKeys(Password);
 		submitCTA.click();
 		waitforvisibilityofwebelement(waitforerrormsg);
 	}
 
-	public InventoryPage LoginUsingEnterkey(String username, String Password) {
+	public InventoryPage LoginUsingEnterkey(String Validusername, String Password) {
 
-		usernameTxt.sendKeys(username);
+		usernameTxt.sendKeys(Validusername);
 		passwordTxt.sendKeys(Password);
 		submitCTA.sendKeys(Keys.ENTER);
 		InventoryPage inventory = new InventoryPage(driver);
