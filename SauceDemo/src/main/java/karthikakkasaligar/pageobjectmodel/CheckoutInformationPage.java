@@ -68,6 +68,22 @@ public class CheckoutInformationPage extends ReUseableComponents {
 		Assert.assertEquals(ErrorMessage, "Error: Postal Code is required");
 	}
 	
+	public void numericvaluesinnamefeilsd(String Name, String LastName, String PostalCode) {
+		FirstName.sendKeys(Name);
+		Lastname.sendKeys(LastName);
+		Postalcode.sendKeys(PostalCode);
+		ContinueCTA.click();
+	    Assert.assertTrue(driver.getCurrentUrl().isEmpty(), "Numeric validation is not handled");
+	}
+	
+	public void specialcharctersinfeilds(String Name, String LastName, String PostalCode) {
+		FirstName.sendKeys(Name);
+		Lastname.sendKeys(LastName);
+		Postalcode.sendKeys(PostalCode);
+		ContinueCTA.click();
+		Assert.assertTrue(driver.getCurrentUrl().isEmpty(), "special charcter validation is not handled");
+	}
+	
 	
 	
 	

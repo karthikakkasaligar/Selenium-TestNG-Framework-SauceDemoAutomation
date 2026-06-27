@@ -60,4 +60,30 @@ public class CheckoutInformationValidations extends BaseTest {
 		CheckoutInformationPage Checkout = cart.verifycheckoutbutton();
 		Checkout.checkoutwithblankpostalcode(Name, LastName, PostalCode);
 	}
+	
+	@Test
+	public void numericvaluesinnamefeilsd() {
+		String Name = "1234";
+		String LastName = "Akkasaligar";
+		String PostalCode = "123456";
+		String expectedProductname = "Sauce Labs Fleece Jacket";
+		InventoryPage inventory = login.login(login.getusername(), login.getpassword());
+		inventory.addsingleproducttocart(expectedProductname);
+		CartPage cart = inventory.clickcarticon();
+		CheckoutInformationPage Checkout = cart.verifycheckoutbutton();
+		Checkout.numericvaluesinnamefeilsd(Name, LastName, PostalCode);
+	}
+	
+	@Test
+	public void specialcharctersinfeilds() {
+		String Name = "@@@";
+		String LastName = "@@@@";
+		String PostalCode = "@#$%Z^";
+		String expectedProductname = "Sauce Labs Fleece Jacket";
+		InventoryPage inventory = login.login(login.getusername(), login.getpassword());
+		inventory.addsingleproducttocart(expectedProductname);
+		CartPage cart = inventory.clickcarticon();
+		CheckoutInformationPage Checkout = cart.verifycheckoutbutton();
+		Checkout.specialcharctersinfeilds(expectedProductname, LastName, PostalCode);
+	}
 }
